@@ -1,0 +1,79 @@
+
+
+
+
+ Настроить Вагран для работы на школьном маке - 5Гб памяти
+
+Место сохранения боксов
+https://webhamster.ru/mytetrashare/index/mtb0/1443950715w1w8jn2plh
+
+Переменные окружения (VAGRANT_HOME)
+https://developer.hashicorp.com/vagrant/docs/other/environmental-variables
+
+
+
+
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+
+
+
+
+
+варианты скачивания ОС
+
+1. https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box
+2. https://vagrantcloud.com/centos/8
+
+
+1. **********************************
+vagrant init -m my-box https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box
+
+это создаст вагрантфайл
+  ||
+ \  /
+  \/
+____________________
+|
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "my-box"
+  config.vm.box_url = "https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box"
+end
+|___________________
+
+с сайта ОС (1 мин)
+https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box
+
+2. **********************************
+
+https://vagrantcloud.com/centos/8
+это создаст вагрантфайл
+  ||
+ \  /
+  \/
+____________________
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/8"
+end
+____________________
+
+через вагрант инит, в вагрантфайле будет строка config.vm.box = "centos/8" 
+и произойдет скачивание образа ОС по ссылке https://vagrantcloud.com/centos/8
+vagrant init -m centos/8
+
+3. **********************************
+локальный файл образа (аналогично п.1 vagrant init -m имя_бокса путь_к_образу)
+file://CentOS-8-Vagrant-8.3.2011-20201204.2.x86_64.vagrant-virtualbox.box
+
+
+
