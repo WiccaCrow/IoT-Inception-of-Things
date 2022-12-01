@@ -2,20 +2,23 @@
 ***** K3S *****
 
 Наша команда для установки k3s в скрипте:
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" --write-kubeconfig-mode=644 sh -
-            1.                        2.                         3. и 4.
+curl -sfL https://get.k3s.io | INSTALL_K3S_SELINUX_WARN=true INSTALL_K3S_EXEC="server" --write-kubeconfig-mode=644 sh -
+            1.                                  2.                             3.                         4. и 5.
 подробно:
 1.    установить k3s
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -
 https://www.k3s.io/
 
-2.    INSTALL_K3S_EXEC. переменные среды при установке k3s
+2.
+https://docs.k3s.io/advanced#additional-preparation-for-red-hatcentos-enterprise-linux
+
+3.    INSTALL_K3S_EXEC. переменные среды при установке k3s
 https://docs.k3s.io/reference/env-variables
 
-3.    Дополнительно можно указать флаги при установке k3s
+4.    Дополнительно можно указать флаги при установке k3s
 https://docs.k3s.io/reference/server-config
 
-4.    Обязательно НУЖНО --write-kubeconfig-mode=644
+5.    Обязательно НУЖНО --write-kubeconfig-mode=644
 644 значение - это как обычный chmod
 https://0to1.nl/post/k3s-kubectl-permission/
 
@@ -46,8 +49,17 @@ provisioning
 inline
 https://developer.hashicorp.com/vagrant/docs/provisioning/shell
 
+vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+откуда взят флаг --cpuexecutioncap, и подобные
+https://www.virtualbox.org/manual/UserManual.html
 
+nodeSW.vm.provision "shell",
+  path: "scripts/runSW.sh"
+когда inline, когда path для скрипта
+https://developer.hashicorp.com/vagrant/docs/provisioning/shell
 
+Vagrant with Docker provider: specifying CPU and Memory
+https://stackoverflow.com/questions/47919339/vagrant-with-docker-provider-specifying-cpu-and-memory
 
 ***** CentOS *****
 
