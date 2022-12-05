@@ -1,37 +1,84 @@
 
-***** K3S *****
+# K3S
 
 Наша команда для установки k3s в скрипте:
-curl -sfL https://get.k3s.io | INSTALL_K3S_SELINUX_WARN=true INSTALL_K3S_EXEC="server" --write-kubeconfig-mode=644 sh -
-            1.                                  2.                             3.                         4. и 5.
+
+    curl -sfL https://get.k3s.io |              \
+        INSTALL_K3S_SELINUX_WARN=true           \
+        K3S_KUBECONFIG_MODE="644"               \
+        INSTALL_K3S_EXEC="server                \
+            --selinux                           \
+            --cluster-init                      \
+            --bind-address=192.168.56.111       \
+            --advertise-address=192.168.56.111  \
+            --node-id=192.168.56.111"           \
+        sh -
+
+***
+    curl -sfL https://get.k3s.io |              \  1.
+        INSTALL_K3S_SELINUX_WARN=true           \  2.
+        K3S_KUBECONFIG_MODE="644"               \  3. и 4.
+        INSTALL_K3S_EXEC="server                \  5.
+            --selinux                           \  6.
+            --cluster-init                      \  7.
+            --bind-address=192.168.56.111       \  8.
+            --advertise-address=192.168.56.111  \  9.
+            --node-id=192.168.56.111"           \ 10.
+        sh -
+
+***
+
+
+
+INSTALL_K3S_EXEC="server --selinux" K3S_KUBECONFIG_MODE="644" sh -
+              3.                            4. и 5.
 подробно:
 1.    установить k3s
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -
 https://www.k3s.io/
+Install Script https://docs.k3s.io/quick-start
 
 2.
 https://docs.k3s.io/advanced#additional-preparation-for-red-hatcentos-enterprise-linux
 
-3.    INSTALL_K3S_EXEC. переменные среды при установке k3s
-https://docs.k3s.io/reference/env-variables
-
-4.    Дополнительно можно указать флаги при установке k3s
+3.    Дополнительно можно указать флаги при установке k3s
 https://docs.k3s.io/reference/server-config
 
-5.    Обязательно НУЖНО --write-kubeconfig-mode=644
+4.    Обязательно НУЖНО --write-kubeconfig-mode=644
 644 значение - это как обычный chmod
 https://0to1.nl/post/k3s-kubectl-permission/
 
+5.    INSTALL_K3S_EXEC. переменные среды при установке k3s
+https://docs.k3s.io/reference/env-variables
+
+***
 рекомендации в задании 1 CPU, 512 MB of RAM (or 1024)
 соответствуют требованиям для k3s
 https://docs.k3s.io/installation/requirements
 
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" K3S_KUBECONFIG_MODE="644" sh -
 
+6. CentOS SELinux
+https://docs.k3s.io/advanced#additional-preparation-for-red-hatcentos-enterprise-linux
+
+7.
+
+8.
+https://docs.k3s.io/reference/server-config
+для чего флаг --bind-address (сервер будет слушать на этом ip)
+https://denisitpro.wordpress.com/2021/02/19/k8s-configure-bind-address/
+
+9.
+IP сервера объявляем всем членам кластера (нашему агенту)
+https://docs.k3s.io/reference/server-config
+
+10.
+
+curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
+https://docs.k3s.io/quick-start
 
 
-
-***** Vagrant *****
+# Vagrant
 
 Место сохранения боксов
 https://webhamster.ru/mytetrashare/index/mtb0/1443950715w1w8jn2plh
@@ -61,7 +108,7 @@ https://developer.hashicorp.com/vagrant/docs/provisioning/shell
 Vagrant with Docker provider: specifying CPU and Memory
 https://stackoverflow.com/questions/47919339/vagrant-with-docker-provider-specifying-cpu-and-memory
 
-***** CentOS *****
+# CentOS 
 
 варианты скачивания ОС
 
