@@ -1,31 +1,49 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Server datas
+NODE_S_NAME  =   "mdulcieS"
+NODE_S_IP    =   "192.168.56.110"
+
+# Server Worker datas
+NODE_SW_NAME =   "mdulcieSW"
+NODE_SW_IP   =   "192.168.56.111"
+
+# Generate token
+require 'openssl'
+require 'digest/md5'
+TOKEN = Digest::MD5.hexdigest(OpenSSL::Random.random_bytes(32))
+
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
 Vagrant.configure("2") do |config|
   config.vm.box = "CentOS_official_site_OS"
   config.vm.box_url = "https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 512
     vb.cpus = 1
+		# vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
-  config.vm.define "mdulcieS" do |nodeS|
-    nodeS.vm.hostname = "mdulcieS"
-    nodeS.vm.network "private_network", ip: "192.168.56.110"
+  config.vm.define NODE_S_NAME do |nodeS|
+    nodeS.vm.hostname = NODE_S_NAME
+    nodeS.vm.network "private_network", ip: NODE_S_IP
     nodeS.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--name", "mdulcieS"]
+      # vb.customize ["modifyvm", :id, "--name", NODE_S_NAME]
+      vb.name = NODE_S_NAME
     end
-    nodeS.vm.provision "shell",
-      path: "scripts/runS.sh"
+    nodeS.vm.provision "shell", privileged: true,
+      path: "scripts/runS.sh", args: [NODE_S_IP, TOKEN]
   end
 
-  config.vm.define "mdulcieSW" do |nodeSW|
-    nodeSW.vm.hostname = "mdulcieSW"
-    nodeSW.vm.network "private_network", ip: "192.168.56.111"
+  config.vm.define NODE_SW_NAME do |nodeSW|
+    nodeSW.vm.hostname = NODE_SW_NAME
+    nodeSW.vm.network "private_network", ip: NODE_SW_IP
     nodeSW.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--name", "mdulcieSW"]
+      vb.customize ["modifyvm", :id, "--name", NODE_SW_NAME]
     end
-    nodeSW.vm.provision "shell",
-      path: "scripts/runSW.sh"
+    nodeSW.vm.provision "shell", privileged: true,
+      path: "scripts/runSW.sh", args: [NODE_S_IP, TOKEN, NODE_SW_IP]
   end
 end
