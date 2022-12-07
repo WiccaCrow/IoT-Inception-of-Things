@@ -1,14 +1,22 @@
 1.  Настроить Virtualbox.
     1) это включит возможность перетаскивать файлы и копировать/вставлять текст между хостом и гостевой ОС
+        ```
         "Настроить" -> "общие" -> "дополнительно" -> "общий буфер обмена" -> "drag n drop"
+        ```
     2) при решении дать ВМ более 4ГБ RAM (может зависать ВМ):
+        ```
         "Настроить" -> "система" -> "процессор" -> "Включить PAE/NX"
+        ```
     3) Обязательно (вагрант без этого не поднимет вм):
+        ```
         "Настроить" -> "система" -> "процессор" -> "Включить Nested VT-x/AMD-V"
-
+        ```
         либо через консоль:
-            VBoxManage list vms
-            VBoxManage modifyvm vb_mdulcie --nested-hw-virt on
+
+        ```
+        VBoxManage list vms
+        VBoxManage modifyvm vb_mdulcie --nested-hw-virt on
+        ```
     4) По желанию в Дисплее можно добавить видеопамяти, аудио вход/выход, общую папку и т.д.
     5) Зайти в созданную гостевую машину.
 
@@ -20,16 +28,25 @@
 
 2. Установить выбранную ОС из iso образа на гостевую машину.
     Я выбрала убунту 20.04:
+    ```
         English -> Install Ubuntu -> English-English -> Minimal installation ->
         erase disk and install Ubuntu -> Continue -> Moscow time ->
         login: mdulcie password: mdulcie comp.name: mdulcieVB Log in authomatically
+    ```
+3. Установить в гостевой машине VSCode, Google chrome, vagrant, virtualbox, git:
+3.1.
+```
+#!/bin/sh
 
-3. Установить VScode: 
-    sudo snap install --classic code
+sudo snap install --classic code
+sudo apt-get install -y vagrant virtualbox git
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+```
 
-    установить всё удобное (браузер https://www.google.com/chrome/?platform=linux)...
-
-4. Для взаимодействия с гитхаб:
+3.2. Для взаимодействия с гитхаб:
+    ```
     В ней установить git:
         sudo apt-get install git
 
@@ -38,24 +55,8 @@
 
     выбрать папку: /home/mdulcie/.ssh
     из файла /home/mdulcie/.ssh/id_rsa.pub     добавить ключ на гите
-
+    ```
 https://help.reg.ru/support/servery-vps/oblachnyye-servery/rabota-s-serverom/kak-ustanovit-i-nastroit-ssh
-
-5.
-    sudo apt-get install -y vagrant
-    sudo apt-get install -y virtualbox
-
-
-для проверки ip адреса машины можно использовать ifconfig внутри машины (установить net-tools)
 
 почитать про альтернативу кубернету nomad
 https://developer.hashicorp.com/nomad/docs/nomad-vs-kubernetes/alternative
-
-#!/bin/sh
-
-sudo snap install --classic code
-sudo apt-get install -y vagrant virtualbox git
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome-stable_current_amd64.deb
-rm google-chrome-stable_current_amd64.deb
-
