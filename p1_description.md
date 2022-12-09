@@ -97,14 +97,13 @@ https://docs.k3s.io/quick-start
 
 https://docs.k3s.io/reference/agent-config
 
-echo "$1 mdulcieS" >> /etc/hosts
 
 
 
 ***
 # II. Vagrant
 
-1. Для написания Vagrantfile можно использовать код на Ruby
+1. Для написания Vagrantfile можно использовать код на Ruby.
 Например, здесь мы сгенерировали токен (12-15 строки):
 ```
 # Generate token

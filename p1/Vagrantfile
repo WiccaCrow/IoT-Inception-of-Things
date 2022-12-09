@@ -17,7 +17,7 @@ TOKEN = Digest::MD5.hexdigest(OpenSSL::Random.random_bytes(32))
 # environmental-variables
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
-
+# Configure
 Vagrant.configure("2") do |config|
   config.vm.box     = "CentOS_official_site_OS"
   config.vm.box_url = "https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-Vagrant-8.4.2105-20210603.0.x86_64.vagrant-virtualbox.box"
@@ -30,7 +30,6 @@ Vagrant.configure("2") do |config|
     nodeS.vm.hostname = NODE_S_NAME
     nodeS.vm.network "private_network", ip: NODE_S_IP
     nodeS.vm.provider "virtualbox" do |vb|
-      # vb.customize ["modifyvm", :id, "--name", NODE_S_NAME]
       vb.name = NODE_S_NAME
     end
     nodeS.vm.provision "shell", privileged: true,
@@ -44,6 +43,6 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--name", NODE_SW_NAME]
     end
     nodeSW.vm.provision "shell", privileged: true,
-      path: "scripts/runSW.sh", args: [NODE_S_IP, TOKEN, NODE_SW_IP]
+      path: "scripts/runSW.sh", args: [NODE_S_IP, TOKEN]
   end
 end
