@@ -98,7 +98,15 @@ https://docs.k3s.io/quick-start
 https://docs.k3s.io/reference/agent-config
 
 
+## k3s uninstall
+Зайти в виртуальную машину сервера/агента и ввести:
+```
+  # Виртуальная машина сервера
+  /usr/local/bin/k3s-uninstall.sh
 
+  # Виртуальная машина агента
+  /usr/local/bin/k3s-agent-uninstall.sh
+```
 
 ***
 # II. Vagrant
@@ -149,8 +157,9 @@ privileged - как суперпользователь
 
 nodeSW.vm.provision "shell",
   path: "scripts/runSW.sh"
-когда inline, когда path для скрипта
-https://developer.hashicorp.com/vagrant/docs/provisioning/shell
+когда inline, когда path для скрипта 
+(примеры, аргументы, текст скрипта в самом в вагрантафйле)
+https://developer.hashicorp.com/vagrant/docs/provisioning/shell#inline-scripts
 
 
 

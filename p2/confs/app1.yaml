@@ -1,35 +1,52 @@
-apiVersion: apps/v1
-kind: Deployment
+kind: Service
+apiVersion: v1
 metadata:
-  name: app-two
+  name: app-one-service
   labels:
-    app: app2
+    p2: app1
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+  selector:
+    p2: app1
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: app-one-deployment
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    p2: app1
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: app2
+      p2: app1
   template:
     metadata:
       labels:
-        app: app2
+        p2: app1
     spec:
       containers:
-      - name: app-two
-        image: devenv571/sudoku-app
+      - name: app-one-container
+        image: cloudnatived/demo:hello
         ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-two
-  labels:
-    app: app2
-spec:
-  selector:
-    app.kubernetes.io/name: app-two
-  ports:
-    - protocol: TCP
-      port: 443
-      targetPort: 8080
+        - containerPort: 8888
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 2
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 4
+          periodSeconds: 30
+        securityContext:
+          readOnlyRootFilesystem: true

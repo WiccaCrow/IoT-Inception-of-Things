@@ -8,12 +8,20 @@ sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.
 export  INSTALL_K3S_SELINUX_WARN="true"         \
         K3S_SELINUX="true"                      \
         K3S_KUBECONFIG_MODE="644"               \
-        K3S_AGENT_TOKEN=$2                      \
         K3S_CLUSTER_INIT=1                      \
         INSTALL_K3S_EXEC="server                \
-            --bind-address=$1                   \
-            --advertise-address=$1"
+            "
+            # --tls-san $1                        \
+            # --node-ip $1                        \
+            # --https-listen-port=443             \
 
 sudo curl -sfL https://get.k3s.io | sh -
 
 echo "alias k='kubectl'" >> /etc/bashrc
+
+while ! /usr/local/bin/kubectl --help
+do
+    sleep 5
+done
+
+/usr/local/bin/kubectl apply -f $2

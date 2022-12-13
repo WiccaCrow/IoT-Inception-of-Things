@@ -1,35 +1,34 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: app-two
-  labels:
-    app: app2
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: app2
-  template:
-    metadata:
-      labels:
-        app: app2
-    spec:
-      containers:
-      - name: app-two
-        image: devenv571/sudoku-app
-        ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-two
-  labels:
-    app: app2
-spec:
-  selector:
-    app.kubernetes.io/name: app-two
-  ports:
-    - protocol: TCP
-      port: 443
-      targetPort: 8080
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: app-three-service
+#   labels:
+#     p2: app3
+# spec:
+#   ports:
+#     - port: 80
+#       targetPort: 8080
+#   selector:
+#     p2: app3
+# ---
+# kind: Deployment
+# apiVersion: apps/v1
+# metadata:
+#   name: app-three-deployment
+#   labels:
+#     p2: app3
+# spec:
+#   selector:
+#     matchLabels:
+#       p2: app3
+#   template:
+#     metadata:
+#       labels:
+#         p2: app3
+#     spec:
+#       containers:
+#       - name: app-three-container
+#         image: devenv571/sudoku-app
+#         ports:
+#         - containerPort: 8080
+#           protocol: TCP

@@ -1,27 +1,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: app2-ingress
   labels:
-    app: app2
+    p2: app1
+    p2: app2
 spec:
   rules:
   - http:
       paths:
-      - path: /sudoku
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: app-two
+            name: app-one-service
             port:
-              number: 443
+              number: 80
   - host: app2.com
     http:
       paths:
-      - path: /sudoku
+      - path: /
+      # - path: /sudoku
         pathType: Prefix
         backend:
           service:
-            name: app-two
+            name: app-two-service
             port:
-              number: 443
+              number: 80
