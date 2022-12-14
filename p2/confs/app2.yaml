@@ -8,8 +8,8 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: 8888
-      # targetPort: 8080
+      # targetPort: 8888
+      targetPort: 8080
   selector:
     p2: app2
 ---
@@ -30,26 +30,27 @@ spec:
       labels:
         p2: app2
     spec:
+      replicas: 3
       containers:
       - name: app-two-container
-        image: cloudnatived/demo:hello
-        # image: devenv571/sudoku-app
+        # image: cloudnatived/demo:hello
+        image: devenv571/sudoku-app
         ports:
-        - containerPort: 8888
-        # - containerPort: 8080
+        # - containerPort: 8888
+        - containerPort: 8080
           protocol: TCP
         readinessProbe:
           httpGet:
             path: /
-            port: 8888
-            # port: 8080
+            # port: 8888
+            port: 8080
           initialDelaySeconds: 2
           periodSeconds: 3
         livenessProbe:
           httpGet:
             path: /
-            port: 8888
-            # port: 8080
+            # port: 8888
+            port: 8080
           initialDelaySeconds: 4
           periodSeconds: 30
         securityContext:

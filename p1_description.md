@@ -161,7 +161,8 @@ nodeSW.vm.provision "shell",
 (примеры, аргументы, текст скрипта в самом в вагрантафйле)
 https://developer.hashicorp.com/vagrant/docs/provisioning/shell#inline-scripts
 
-
+8. SSH и Vagrant
+https://developer.hashicorp.com/vagrant/docs/cli/ssh
 
 
 

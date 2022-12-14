@@ -12,7 +12,8 @@ export  INSTALL_K3S_SELINUX_WARN="true"         \
         K3S_CLUSTER_INIT=1                      \
         INSTALL_K3S_EXEC="server                \
             --bind-address=$1                   \
-            --advertise-address=$1"
+            --advertise-address=$1              \
+            "
 
 sudo curl -sfL https://get.k3s.io | sh -
 

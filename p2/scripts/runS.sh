@@ -10,10 +10,8 @@ export  INSTALL_K3S_SELINUX_WARN="true"         \
         K3S_KUBECONFIG_MODE="644"               \
         K3S_CLUSTER_INIT=1                      \
         INSTALL_K3S_EXEC="server                \
+            --flannel-iface=eth1                \
             "
-            # --tls-san $1                        \
-            # --node-ip $1                        \
-            # --https-listen-port=443             \
 
 sudo curl -sfL https://get.k3s.io | sh -
 

@@ -21,7 +21,6 @@ metadata:
   labels:
     p2: app1
 spec:
-  replicas: 3
   selector:
     matchLabels:
       p2: app1
