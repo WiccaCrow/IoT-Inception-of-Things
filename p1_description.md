@@ -1,6 +1,7 @@
 ***
 #  I. K3S 
 
+## mirrorlist - CentOS 8
 При установке понадобится использование yum (внутри скрипта k3s). При поднятии машин (без правки mirrorlist) вагрантом выходит красное сообщение:
 
 _SW: Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist_
@@ -56,6 +57,11 @@ https://docs.k3s.io/reference/server-config
 
 3.    Обязательно НУЖНО --write-kubeconfig-mode=644
 644 значение - это как обычный chmod
+
+официальная документация
+https://ranchermanager.docs.rancher.com/v2.6/how-to-guides/new-user-guides/kubernetes-clusters-in-rancher-setup/register-existing-clusters
+
+не из официальной документации
 https://0to1.nl/post/k3s-kubectl-permission/
 
 4. K3S_TOKEN or K3S_AGENT_TOKEN
@@ -108,6 +114,10 @@ https://docs.k3s.io/reference/agent-config
   /usr/local/bin/k3s-agent-uninstall.sh
 ```
 
+## Рекомендации в задании 1 CPU, 512 MB of RAM (or 1024)
+соответствуют требованиям для k3s
+https://docs.k3s.io/installation/requirements
+
 ***
 # II. Vagrant
 
@@ -120,20 +130,17 @@ require 'digest/md5'
 TOKEN = Digest::MD5.hexdigest(OpenSSL::Random.random_bytes(32))
 
 ```
-2. Рекомендации в задании 1 CPU, 512 MB of RAM (or 1024)
-соответствуют требованиям для k3s
-https://docs.k3s.io/installation/requirements
 
-3. С целью экономии места, можно задать путь сохранения боксов
+2. С целью экономии места, можно задать путь сохранения боксов
 https://webhamster.ru/mytetrashare/index/mtb0/1443950715w1w8jn2plh
 
-4. Переменные окружения (VAGRANT_HOME)
+3. Переменные окружения (VAGRANT_HOME)
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 Отключить параллельную подготовку боксов сервера и воркера
 https://developer.hashicorp.com/vagrant/docs/other/environmental-variables
 
-5. 1. Для провайдера Virtualbox.
+4. 1. Для провайдера Virtualbox.
 Настроить Vagrantfile config.vm
 https://developer.hashicorp.com/vagrant/docs/vagrantfile/machine_settings
 
@@ -141,13 +148,13 @@ vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
 откуда взят флаг --cpuexecutioncap, и подобные
 https://www.virtualbox.org/manual/UserManual.html
 
-5. 2. Vagrant with Docker provider: specifying CPU and Memory
+4. 2. Vagrant with Docker provider: specifying CPU and Memory
 https://stackoverflow.com/questions/47919339/vagrant-with-docker-provider-specifying-cpu-and-memory
 
-6. Несколько машин (Сервер и Сервер-воркер)
+5. Несколько машин (Сервер и Сервер-воркер)
 https://developer.hashicorp.com/vagrant/docs/multi-machine
 
-7. Запуск команд при старте машины (настройки)
+6. Запуск команд при старте машины (настройки)
 provisioning
 
 inline - запуск скрипта, приложения, команды
@@ -161,7 +168,7 @@ nodeSW.vm.provision "shell",
 (примеры, аргументы, текст скрипта в самом в вагрантафйле)
 https://developer.hashicorp.com/vagrant/docs/provisioning/shell#inline-scripts
 
-8. SSH и Vagrant
+7. SSH и Vagrant
 https://developer.hashicorp.com/vagrant/docs/cli/ssh
 
 

@@ -1,34 +1,51 @@
-# kind: Service
-# apiVersion: v1
-# metadata:
-#   name: app-three-service
-#   labels:
-#     p2: app3
-# spec:
-#   ports:
-#     - port: 80
-#       targetPort: 8080
-#   selector:
-#     p2: app3
-# ---
-# kind: Deployment
-# apiVersion: apps/v1
-# metadata:
-#   name: app-three-deployment
-#   labels:
-#     p2: app3
-# spec:
-#   selector:
-#     matchLabels:
-#       p2: app3
-#   template:
-#     metadata:
-#       labels:
-#         p2: app3
-#     spec:
-#       containers:
-#       - name: app-three-container
-#         image: devenv571/sudoku-app
-#         ports:
-#         - containerPort: 8080
-#           protocol: TCP
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-three-service
+  labels:
+    p2: app3
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+  selector:
+    p2: app3
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: app-three-deployment
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    p2: app3
+spec:
+  selector:
+    matchLabels:
+      p2: app3
+  template:
+    metadata:
+      labels:
+        p2: app3
+    spec:
+      containers:
+      - name: app-three-container
+        image: cloudnatived/demo:hello
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 2
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 4
+          periodSeconds: 30
+        securityContext:
+          readOnlyRootFilesystem: true
