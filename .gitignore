@@ -1,2 +1,4 @@
 # vagrant up
 .vagrant
+# other
+.DS_Store

@@ -15,6 +15,7 @@ export                                          \
             "
         # K3S_TOKEN=$2                            \
         # K3S_SELINUX="false"                     \
+            # --egress-selector-mode=disabled     \
             # --cluster-init                      \
 
 curl -sfL https://get.k3s.io | sh -
@@ -26,8 +27,13 @@ do
     sleep 5
 done
 
-# /usr/local/bin/kubectl apply -f /vagrant/confs/
-sudo /usr/local/bin/kubectl apply -f $3
+# /usr/local/bin/kubectl apply -k /vagrant/confs/
+# sudo /usr/local/bin/kubectl apply -k $3
+/usr/local/bin/kubectl apply -f /vagrant/confs/app1.yaml
+/usr/local/bin/kubectl apply -f /vagrant/confs/app2.yaml
+/usr/local/bin/kubectl apply -f /vagrant/confs/app3.yaml
+/usr/local/bin/kubectl apply -f /vagrant/confs/ingress.yaml
+
 
 # https://jmrobles.medium.com/fix-rancher-ssl-certificate-aaa9cb7cc7de
 # /usr/local/bin/kubectl --insecure-skip-tls-verify delete secret k3s-serving -n kube-system
