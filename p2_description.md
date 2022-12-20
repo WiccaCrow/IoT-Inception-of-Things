@@ -27,7 +27,7 @@ do
     sleep 5
 done
 
-/usr/local/bin/kubectl apply -f $2
+/usr/local/bin/kubectl apply -k $2
 ```
 
 
@@ -109,7 +109,7 @@ https://habr.com/ru/company/flant/blog/521406/
     https://habr.com/ru/company/flant/blog/332432/
 
 
-1.  Deployment
+#  Deployment
     https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
     readinessProbe и livenessProbe
@@ -129,25 +129,6 @@ https://habr.com/ru/company/flant/blog/521406/
     Настройка не позволит контейнеру в его собственной файловой системе делать записи и как следствие не позволит воспользоваться уязвимостями в Docker и Kubernetes
     https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
-    Объект StatefulSet
-    для поседовательного запуска pod-оболочек(например, сначала pod с базой данных, потом с Wordpress и т.д.)
-    https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/
-    https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
-
-с.197
-    Для максимальной безопасности следует убрать любые мандаты для контейнеров
-и затем по мере необходимости отдельно их выдавать:
-containers:
-- name: demo
-image: cloudnatived/demo:hello
-securityContext:
-capabilities:
-drop: ["all"]
-add: ["NET_BIND_SERVICE"]
-
-2.  configmap. Настройка конфигов.
-    https://kubernetes.io/docs/concepts/configuration/configmap/
-
-    configmap "позволяет использовать Go templates в конфигах, т.е. рендерить их подобно HTML-страницам и делать reload приложения при изменении конфига без рестарта"
-    При изменении данных в одном из указанных в configmap конфиге, под сам перезапустится (есть исключение)
-    https://habr.com/ru/company/flant/blog/498970/
+hello kubernetes. Ссылка на приложение и инструкция по использованию
+https://hub.docker.com/r/paulbouwer/hello-kubernetes/
+https://github.com/paulbouwer/hello-kubernetes/tree/0ec53bfee741ae3bffb5936f1c44138d7d4a3006

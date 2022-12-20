@@ -13,10 +13,6 @@ export                                          \
         INSTALL_K3S_EXEC="server                \
             --flannel-iface=eth1                \
             "
-        # K3S_TOKEN=$2                            \
-        # K3S_SELINUX="false"                     \
-            # --egress-selector-mode=disabled     \
-            # --cluster-init                      \
 
 curl -sfL https://get.k3s.io | sh -
 

@@ -120,13 +120,17 @@ rm google-chrome-stable_current_amd64.deb
     ```
 
 3. Установить VScode: 
-    sudo snap install --classic code
+3.1.
+```
+#!/bin/sh
 
-    установить всё удобное (браузер https://www.google.com/chrome/?platform=linux)...
+sudo snap install --classic code
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt-get install -y vagrant virtualbox git ./google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
+```
 
-4. Для взаимодействия с гитхаб:
-    В ней установить git:
-        sudo apt-get install git
+3.2. Для взаимодействия с гитхаб (pull, push, ...):
 
     сгененировать ключ
         ssh-keygen
@@ -135,13 +139,6 @@ rm google-chrome-stable_current_amd64.deb
     из файла /home/mdulcie/.ssh/id_rsa.pub     добавить ключ на гите
 
 https://help.reg.ru/support/servery-vps/oblachnyye-servery/rabota-s-serverom/kak-ustanovit-i-nastroit-ssh
-
-5.
-    sudo apt-get install -y vagrant
-    sudo apt-get install -y virtualbox
-
-
-для проверки ip адреса машины можно использовать ifconfig внутри машины (установить net-tools)
 
 почитать про альтернативу кубернету nomad
 https://developer.hashicorp.com/nomad/docs/nomad-vs-kubernetes/alternative
