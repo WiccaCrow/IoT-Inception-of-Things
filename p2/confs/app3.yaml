@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: app-three
+  annotations:
+    IOT/owner: "m&m's"
   labels:
     p2: app3
 spec:

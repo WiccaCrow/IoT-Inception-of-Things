@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: p2-ingress
+  annotations:
+    IOT/owner: "m&m's"
   labels:
     p2: app1
     p2: app2

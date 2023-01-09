@@ -29,10 +29,3 @@ done
 /usr/local/bin/kubectl apply -f /vagrant/confs/app2.yaml
 /usr/local/bin/kubectl apply -f /vagrant/confs/app3.yaml
 /usr/local/bin/kubectl apply -f /vagrant/confs/ingress.yaml
-
-
-# https://jmrobles.medium.com/fix-rancher-ssl-certificate-aaa9cb7cc7de
-# /usr/local/bin/kubectl --insecure-skip-tls-verify delete secret k3s-serving -n kube-system
-
-# sudo yum install -y vim
-# rm /var/lib/rancher/k3s/server/tls/dynamic-cert.json

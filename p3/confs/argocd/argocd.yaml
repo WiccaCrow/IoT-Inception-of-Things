@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-app
+  namespace: argocd
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    p2: dev
+    name: argocd-app
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/WiccaCrow/mdulcie.git
+    targetRevision: HEAD
+    path: confs
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated: {}
+      prune: true
+      allowEmpty: true
+      selfHeal: true
