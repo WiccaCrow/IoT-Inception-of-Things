@@ -1,20 +1,21 @@
 #!/bin/bash
 
 #########
-# k3d requirements: docker and kubectl
-# 1. install docker: https://docs.docker.com/engine/install/ubuntu/
+# 1. k3d requirements: docker and kubectl
 
-# uninstall old versions
+# install Docker
+echo -e "\033[1;35m install docker: \033[0m"
+
+echo -e "\033[32m install docker: uninstall old versions \033[0m"
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
-# set up the repository
+echo -e "\033[32m install docker: set up the repository \033[0m"
 sudo apt-get update
-sudo apt-get install    \
+sudo apt-get install -y \
     ca-certificates     \
     curl                \
     gnupg               \
     lsb-release
-
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
@@ -22,25 +23,34 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# Install Docker Engine
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+echo -e "\033[32m install docker: Install Docker Engine \033[0m"
 
-#########
-# 2. install k3d
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# install k3d and kubectl
+echo -e "\033[1;35m install k3d \033[0m"
 wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
-# 3. install kubectl
+echo -e "\033[1;35m install kubectl \033[0m"
 sudo snap install kubectl --classic
 
-# 4. cluster create
-k3d cluster create mmCluster                                \
-                                --servers 1                 \
-                                # --port '80:80@loadbalancer'
-                                # --api-port 127.0.0.1:6445   \
+#########
+# 2. Run
+echo -e "\033[1;35m Run \033[0m"
 
-# 5. manifests
-/usr/local/bin/kubectl create -f ../confs/namespace.yaml
-/usr/local/bin/kubectl apply  -n dev    -k ../confs/dev
-/usr/local/bin/kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
-/usr/local/bin/kubectl apply  -n argocd -k ../confs/argocd
+echo -e "\033[32m cluster create \033[0m"
+k3d cluster create mmCluster                                \
+                                --api-port 6550             \
+                                --port '80:80@loadbalancer'
+                                # --servers 1                 \
+
+echo -e "\033[32m manifests \033[0m"
+kubectl create -f ../confs/namespace.yaml
+kubectl apply  -n dev    -f ../confs/dev
+kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+echo -e "\033[32m manifest argocd \033[0m"
+kubectl apply  -n argocd -f ../confs/argocd
+
+# k3d cluster list
+# k3d cluster delete mmCluster
