@@ -110,24 +110,24 @@ https://habr.com/ru/company/flant/blog/521406/
 
 
 #  Deployment
-    https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
-    readinessProbe и livenessProbe
-    Жизнеспособность и готовность контейнера.
-    Если проверка на рабочее состояние приложения внутри контейнера завалена, то контейнер будет перезапущен.
-    https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+readinessProbe и livenessProbe
+Жизнеспособность и готовность контейнера.
+Если проверка на рабочее состояние приложения внутри контейнера завалена, то контейнер будет перезапущен.
+https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 
-    minReadySeconds
-    https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
+minReadySeconds
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds
 
-    Просто хороший тон. Оставить метку ответственного за это развертывание.
-    annotations:
-        IOT/owner: "m&m's"
+Просто хороший тон. Оставить метку ответственного за это развертывание.
+annotations:
+    IOT/owner: "m&m's"
 
-    securityContext:
-        readOnlyRootFilesystem
-    Настройка не позволит контейнеру в его собственной файловой системе делать записи и как следствие не позволит воспользоваться уязвимостями в Docker и Kubernetes
-    https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext:
+    readOnlyRootFilesystem
+Настройка не позволит контейнеру в его собственной файловой системе делать записи и как следствие не позволит воспользоваться уязвимостями в Docker и Kubernetes
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
 hello kubernetes. Ссылка на приложение и инструкция по использованию
 https://hub.docker.com/r/paulbouwer/hello-kubernetes/

@@ -13,7 +13,7 @@ https://k3d.io/v5.4.6/#install-script :
 wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 ```
 
-## утсановка docker-engine
+## установка docker-engine
 https://docs.docker.com/engine/install/ubuntu/
 ```
 # uninstall old versions
@@ -92,3 +92,7 @@ https://argo-cd.readthedocs.io/en/stable/proposals/multiple-sources-for-applicat
 
 Синхронизация с git \
 https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/
+
+kubectl wait ожидание определенного состояния объектов \
+https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait \
+https://fabianlee.org/2022/01/27/kubernetes-using-kubectl-to-wait-for-condition-of-pods-deployments-services/

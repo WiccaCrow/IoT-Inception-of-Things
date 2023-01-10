@@ -6,7 +6,7 @@ metadata:
   annotations:
     IOT/owner: "m&m's"
   labels:
-    p2: dev
+    p3: dev
     name: argocd-app
 spec:
   project: default

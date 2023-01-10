@@ -6,14 +6,14 @@ metadata:
   annotations:
     IOT/owner: "m&m's"
   labels:
-    p2: dev
+    p3: dev
 spec:
   ports:
     - port: 80
       protocol: TCP
       targetPort: 8888
   selector:
-    p2: dev
+    p3: dev
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -39,17 +39,17 @@ spec:
         ports:
         - containerPort: 8888
           protocol: TCP
-        # readinessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8888
-        #   initialDelaySeconds: 2
-        #   periodSeconds: 3
-        # livenessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8888
-        #   initialDelaySeconds: 4
-        #   periodSeconds: 30
-        # securityContext:
-        #   readOnlyRootFilesystem: true
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 2
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 4
+          periodSeconds: 30
+        securityContext:
+          readOnlyRootFilesystem: true
