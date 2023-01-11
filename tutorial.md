@@ -1,24 +1,35 @@
 # I. Настроить и запустить Виртуальную машину с помощью командной строки:
 https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyvm.html
 
-1. Подготовка гостевой машины и установка ОС на гостевую машину:
-
+1. Подготовка гостевой машины и установка ОС на гостевую машину: \
+   В скрипте ниже можно задать свой образ гостевой ОС: \
+   - ISO_IMAGE_URL ссылка для скачивания ОС в формате  ".iso" (загрузчик будет curl)
+   - WORK_FOLDER директория, в которой будут размещены: 
+        * образ гостевой ОС, 
+        * файлы гостевой виртуальной машины, 
+        * расположен жесткий диск.
     ```
     #!/bin/sh
+
+    ISO_IMAGE_URL="https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso"
+    ISO_IMAGE_NAME="OS_guest.iso"
+    WORK_FOLDER="/Users/mdulcie/goinfre"
 
     # доступные ОС для установки на машине хосте.
     VBoxManage list ostypes
 
-    #  создать виртуальную машину и зарегистрировать в списке виртуальных машин
+    #  создать виртуальную машину и зарегистрировать в списке виртуальных машин
+    echo -e "\033[32m Virtual machine: Create and register \033[0m"
     VBoxManage createvm                                     \
                         --name vb_mdulcie                   \
-                        --basefolder /Users/mdulcie/goinfre \
+                        --basefolder $WORK_FOLDER           \
                         --ostype Ubuntu_64                  \
                         --register
 
     # настроить виртуальную машину
+    echo -e "\033[32m Virtual machine: setup \033[0m"
     VBoxManage modifyvm        vb_mdulcie                   \
-                        --memory 4096                       \
+                        --memory 8192                       \
                         --vram 64                           \
                         --cpus 6                            \
                         --pae on                            \
@@ -35,40 +46,58 @@ https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyv
     ##########
     # Создать диски
     # контроллер
+    echo -e "\033[32m Virtual machine: create controller \033[0m"
     VBoxManage storagectl      vb_mdulcie                   \
                         --name "IDE Controller"             \
                         --add ide
 
     # жесткий диск
+    echo -e "\033[32m Virtual machine: create hard disk \033[0m"
     VBoxManage createmedium                                  \
-                        --filename /Users/mdulcie/goinfre/vb_mdulcie/vb_mdulcie.vhd \
+                        --filename $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd \
                         --variant Fixed                      \
                         --size 20000
 
     # Присоединить жесткий диск к контроллеру
+    echo -e "\033[32m Virtual machine: attach hard disk to controller \033[0m"
     VBoxManage storageattach   vb_mdulcie                   \
                         --storagectl "IDE Controller"       \
                         --port 0                            \
                         --device 0                          \
                         --type hdd                          \
-                        --medium /Users/mdulcie/goinfre/vb_mdulcie/vb_mdulcie.vhd
+                        --medium $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd
+
+    # скачать установочный образ системы гостевой машины
+    echo -e "\033[32m Virtual machine: download the installation \n image of the guest machine system \033[0m"
+    curl -o $WORK_FOLDER/$ISO_IMAGE_NAME $ISO_IMAGE_URL
 
     # присоединить установочный образ системы гостевой машины
+    echo -e "\033[32m Virtual machine: attach   the installation \n image of the guest machine system \033[0m"
     VBoxManage storageattach   vb_mdulcie                   \
                         --storagectl "IDE Controller"       \
                         --port 1                            \
                         --device 0                          \
                         --type dvddrive                     \
-                        --medium /Users/mdulcie/goinfre/ubuntu-20.04.5-desktop-amd64.iso
+                        --medium $WORK_FOLDER/$ISO_IMAGE_NAME
 
     # запустить машину с установочного диска
+    echo -e "\033[32m Virtual machine: run with the installation \n image of the guest machine system \033[0m"
     VBoxManage modifyvm        vb_mdulcie --boot1 dvd
     VBoxManage startvm         vb_mdulcie --type gui
     ```
 
 2. После того, как ОС будет установлена, выключить, а не перезагрузить Виртуальную машину и
     ```
+   #!/bin/sh
+
+    # ISO_IMAGE_NAME="OS_guest.iso"
+    # WORK_FOLDER="/Users/mdulcie/goinfre"
+    # rm -rf $WORK_FOLDER/$ISO_IMAGE_NAME
+
     # запустить машину без установочного диска
+
+    echo -e "\033[32m Virtual machine: run without the installation \n image of the guest machine system \033[0m"
+    
     VBoxManage modifyvm        vb_mdulcie --boot1 none
     VBoxManage startvm         vb_mdulcie --type gui
     ```
@@ -77,8 +106,9 @@ https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyv
 ```
 #!/bin/sh
 
+gsettings set org.gnome.desktop.session idle-delay 0
 sudo snap install --classic code
-sudo apt-get install -y vagrant virtualbox git
+sudo apt-get install -y vagrant docker.io virtualbox git
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb

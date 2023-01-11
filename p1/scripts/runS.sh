@@ -22,3 +22,10 @@ sudo curl -sfL https://get.k3s.io | sh -
 #
 echo -e "\033[1;35m Create an alias \033[0m"
 echo "alias k='kubectl'" >> /etc/bashrc
+
+#
+echo -e "\033[1;35m Wait server node \033[0m"
+/usr/local/bin/kubectl wait --for=condition=Ready=true nodes --all --timeout=-1s
+# NODE_NAME=$(echo $3 | tr '[:upper:]' '[:lower:]')
+# /usr/local/bin/kubectl wait --for=condition=Ready=true node $NODE_NAME
+echo -e "\033[1;35m server node Ready! \033[0m"
