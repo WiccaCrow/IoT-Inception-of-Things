@@ -1,0 +1,58 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitlab
+  namespace: gitlab
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    iot: bonus
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8886
+  selector:
+    iot: bonus
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gitlab
+  namespace: gitlab
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    iot: bonus
+spec:
+  selector:
+    matchLabels:
+      iot: bonus
+  template:
+    metadata:
+      labels:
+        iot: bonus
+    spec:
+      containers:
+      - name: gitlab-container
+        image: mdulcie/inception-of-things-42-21-bonus-gitlab:v1
+        ports:
+        - containerPort: 8886
+          protocol: TCP
+        # env:
+        #   - name: GITLAB_ROOT_PASSWORD
+        #     value: "mdulciemhufflep"
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 300
+        #   periodSeconds: 30
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 300
+        #   periodSeconds: 180
+        # securityContext:
+        #   readOnlyRootFilesystem: true

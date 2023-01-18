@@ -55,7 +55,7 @@ https://get.k3s.io/
 2.    Дополнительно можно указать флаги при установке k3s
 https://docs.k3s.io/reference/server-config
 
-3.    Обязательно НУЖНО --write-kubeconfig-mode=644
+3.    Обязательно НУЖНО --write-kubeconfig-mode=644 \
 644 значение - это как обычный chmod
 
 официальная документация
