@@ -39,19 +39,16 @@ spec:
         ports:
         - containerPort: 8886
           protocol: TCP
-        # env:
-        #   - name: GITLAB_ROOT_PASSWORD
-        #     value: "mdulciemhufflep"
         # readinessProbe:
         #   httpGet:
         #     path: /
-        #     port: 80
+        #     port: 8886
         #   initialDelaySeconds: 300
         #   periodSeconds: 30
         # livenessProbe:
         #   httpGet:
         #     path: /
-        #     port: 80
+        #     port: 8886
         #   initialDelaySeconds: 300
         #   periodSeconds: 180
         # securityContext:
