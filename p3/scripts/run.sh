@@ -55,6 +55,14 @@ kubectl apply  -n argocd -f ../confs/argocd
 echo -e "\033[1;35m Argo CD in browser: \033[0m"
 kubectl wait --for=condition=Ready=true pods --all -n argocd
 
+timecount=0
+while ! kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo | grep "NotFound" 2>/dev/null
+do
+    sleep 5
+    ((timecount+=5))
+    echo -e "\033[36m...$timecount s...please wait\033[0m"
+done
+
 echo -e "\033[32m    In a browser go to http://localhost:8080 \n\
     and log in to the argocd account with \n\
     login: \n\033[34m\
@@ -64,9 +72,3 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 echo -e "\033[0m"
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-# Some useful commands:
-# k3d cluster delete mmCluster
-# k3d cluster list
-# sudo netstat -ltnp | grep -w ':80'
-# sudo kubectl get -n dev all

@@ -11,7 +11,7 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: 8886
+      targetPort: 80
   selector:
     iot: bonus
 ---
@@ -39,17 +39,3 @@ spec:
         ports:
         - containerPort: 8886
           protocol: TCP
-        # readinessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8886
-        #   initialDelaySeconds: 300
-        #   periodSeconds: 30
-        # livenessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8886
-        #   initialDelaySeconds: 300
-        #   periodSeconds: 180
-        # securityContext:
-        #   readOnlyRootFilesystem: true
