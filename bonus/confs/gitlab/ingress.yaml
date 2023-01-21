@@ -8,6 +8,11 @@ metadata:
   labels:
     iot: bonus
 spec:
+  # tls:
+  # - hosts:
+  #     - mygitlab.ru
+  #   secretName: secret-tls
+  #   secretName: hello-app-tls
   rules:
   - host: mygitlab.ru
     http:

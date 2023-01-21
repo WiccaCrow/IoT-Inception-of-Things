@@ -12,9 +12,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@mygitlab.ru:root/mdulcie.git
+    # repoURL: git@mygitlab.ru:root/mdulcie.git
     # repoURL: https://github.com/WiccaCrow/mdulcie.git
-    targetRevision: HEAD
+    # repoURL: http://mygitlab.ru/root/mdulcie.git
+    repoURL: http://glpat-yUx2ffbgAWYR8Nzy_dm3:root1@mygitlab.ru/root/mdulcie.git
+    targetRevision: main
     path: confs
   destination:
     server: https://kubernetes.default.svc

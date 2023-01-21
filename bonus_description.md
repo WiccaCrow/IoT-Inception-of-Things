@@ -56,8 +56,16 @@ sudo netstat -ltnp | grep -w ':6550'
 # посмотреть всё, что есть в пространстве имен gitlab
 sudo kubectl get -n gitlab all
 
+# создать и получить секреты
+sudo kubectl create secret tls secret-test-tls     \
+   --namespace gitlab                              \
+   --key=./ssl_gitlab/tls.key                      \
+   --cert=./ssl_gitlab/tls.crt
+sudo kubectl get -n gitlab secret -o yaml
+
 # зайти внутрь контейнера в поде с именем pods_name
 sudo kubectl exec -n gitlab --stdin --tty pods_name -- /bin/bash
+
 ```
 Для работы с Gitlab посредством терминала:
 ```

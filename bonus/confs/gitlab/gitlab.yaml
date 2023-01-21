@@ -14,6 +14,25 @@ spec:
       targetPort: 80
   selector:
     iot: bonus
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: gitlab
+#   namespace: gitlab
+#   annotations:
+#     IOT/owner: "m&m's"
+#     # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+#     # service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
+#   labels:
+#     iot: bonus
+# spec:
+#   # type: NodePort
+#   ports:
+#     - port: 80
+#       protocol: TCP
+#       targetPort: 8886
+#   selector:
+#     iot: bonus
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -37,5 +56,6 @@ spec:
       - name: gitlab-container
         image: mdulcie/inception-of-things-42-21-bonus-gitlab:v1
         ports:
-        - containerPort: 8886
+        - containerPort: 80
           protocol: TCP
+          

@@ -42,7 +42,7 @@ echo -e "\033[1;35m Run \033[0m"
 echo -e "\033[32m cluster create \033[0m"
 k3d cluster create mmCluster                                \
                                 --api-port 6550             \
-                                --port '80:80@loadbalancer'
+                                --port '80:80@loadbalancer' 
 
 echo -e "\033[32m manifests \033[0m"
 kubectl create -f ../confs/namespace.yaml
@@ -71,4 +71,8 @@ admin \n\
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 echo -e "\033[0m"
 
+echo -en " login: admin\n password: " > argocd_psswd.txt
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d >> argocd_psswd.txt
+echo >> argocd_psswd.txt
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+rm argocd_psswd.txt

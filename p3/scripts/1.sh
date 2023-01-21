@@ -14,12 +14,10 @@ kubectl create -f ../confs/namespace.yaml
 kubectl apply  -n dev    -f ../confs/dev/
 kubectl wait --for=condition=Ready=true pods --all -n dev
 
-kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply  -n argocd -f ../confs/argocd
 
 echo -e "\033[1;35m Argo CD in browser: \033[0m"
 kubectl wait --for=condition=Ready=true pods --all -n argocd
-# kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 
 timecount=0
 while kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo | grep "NotFound" 2>/dev/null
@@ -37,4 +35,7 @@ admin \n\
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 echo -e "\033[0m"
 
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+echo -en " login: admin\n password: " > argocd_psswd.txt
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d >> argocd_psswd.txt
+echo >> argocd_psswd.txt
+# rm argocd_psswd.txt

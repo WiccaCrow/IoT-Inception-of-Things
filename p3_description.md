@@ -73,7 +73,6 @@ https://kubernetes.io/docs/tasks/administer-cluster/namespaces/#creating-a-new-n
 k3d: namespace в кластере. Создание через командную строку
 https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_namespace/
 
-
 k3d: \
 ingress
 https://k3d.io/v5.4.6/usage/exposing_services/
@@ -96,3 +95,11 @@ https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/
 kubectl wait ожидание определенного состояния объектов \
 https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait \
 https://fabianlee.org/2022/01/27/kubernetes-using-kubectl-to-wait-for-condition-of-pods-deployments-services/
+
+# Адреса в браузере:
+
+Argocd: \
+http://argocd.ru:80
+
+dev:    \
+http://localhost:80
