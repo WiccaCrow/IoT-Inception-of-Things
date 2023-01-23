@@ -12,7 +12,15 @@ k3d cluster create mmCluster                                \
 echo -e "\033[32m manifests \033[0m"
 kubectl create -f ../confs/namespace.yaml
 kubectl apply  -n dev    -f ../confs/dev/
-kubectl wait -n dev --for=condition=Ready=true pod --all 
+timecount=0
+while ! kubectl wait --for=condition=Ready=true pods --all -n dev
+do
+    echo -e "\033[36m...$timecount s. Please wait while resources are created (dev) \033[0m"
+    sleep 5
+    let timecount+=1
+done
+
+# kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply  -n argocd -f ../confs/argocd
 
 #########
@@ -21,7 +29,7 @@ echo -e "\033[1;35m Argo CD in browser: \033[0m"
 timecount=0
 while ! kubectl wait --for=condition=Ready=true pod --all -n argocd
 do
-    echo -e "\033[36m...$timecount s. Please wait while resources are created \033[0m"
+    echo -e "\033[36m...$timecount s. Please wait while resources are created (argocd) \033[0m"
     sleep 5
     let timecount+=1
 done

@@ -47,20 +47,34 @@ k3d cluster create mmCluster                                \
 echo -e "\033[32m manifests \033[0m"
 kubectl create -f ../confs/namespace.yaml
 kubectl apply  -n dev    -f ../confs/dev/
-kubectl wait --for=condition=Ready=true pods --all -n dev
+timecount=0
+while ! kubectl wait --for=condition=Ready=true pods --all -n dev
+do
+    echo -e "\033[36m...$timecount s. Please wait while resources are created (dev) \033[0m"
+    sleep 5
+    let timecount+=1
+done
 
-kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply  -n argocd -f ../confs/argocd
 
+#########
 echo -e "\033[1;35m Argo CD in browser: \033[0m"
-kubectl wait --for=condition=Ready=true pods --all -n argocd
 
 timecount=0
-while ! kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo | grep "NotFound" 2>/dev/null
+while ! kubectl wait --for=condition=Ready=true pod --all -n argocd
+do
+    echo -e "\033[36m...$timecount s. Please wait while resources are created (argocd) \033[0m"
+    sleep 5
+    let timecount+=1
+done
+
+timecount=0
+while kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo | grep "NotFound" 2>/dev/null
 do
     sleep 5
     ((timecount+=5))
-    echo -e "\033[36m...$timecount s...please wait\033[0m"
+    echo -e "\033[36m...$timecount s...please wait while password is created\033[0m"
 done
 
 echo -e "\033[32m    In a browser go to http://localhost:8080 \n\
