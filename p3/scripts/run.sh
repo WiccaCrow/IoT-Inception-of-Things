@@ -74,5 +74,4 @@ echo -e "\033[0m"
 echo -en " login: admin\n password: " > argocd_psswd.txt
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d >> argocd_psswd.txt
 echo >> argocd_psswd.txt
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-rm argocd_psswd.txt
+# rm argocd_psswd.txt

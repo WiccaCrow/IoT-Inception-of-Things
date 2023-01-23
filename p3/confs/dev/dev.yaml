@@ -33,6 +33,8 @@ spec:
       labels:
         p3: dev
     spec:
+      # dnsPolicy: ClusterFirst
+      # hostNetwork: true
       containers:
       - name: dev-container
         image: wil42/playground:v1

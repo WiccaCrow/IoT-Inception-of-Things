@@ -52,6 +52,8 @@ spec:
       labels:
         iot: bonus
     spec:
+      # hostNetwork: true
+      # dnsPolicy: ClusterFirst
       containers:
       - name: gitlab-container
         image: mdulcie/inception-of-things-42-21-bonus-gitlab:v1
