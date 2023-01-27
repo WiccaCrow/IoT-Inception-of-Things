@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitlab
+  annotations:
+    IOT/owner: "m&m's"
+---
 kind: Service
 apiVersion: v1
 metadata:
@@ -9,30 +16,12 @@ metadata:
     iot: bonus
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       protocol: TCP
       targetPort: 80
   selector:
     iot: bonus
-# kind: Service
-# apiVersion: v1
-# metadata:
-#   name: gitlab
-#   namespace: gitlab
-#   annotations:
-#     IOT/owner: "m&m's"
-#     # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-#     # service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
-#   labels:
-#     iot: bonus
-# spec:
-#   # type: NodePort
-#   ports:
-#     - port: 80
-#       protocol: TCP
-#       targetPort: 8886
-#   selector:
-#     iot: bonus
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -52,12 +41,31 @@ spec:
       labels:
         iot: bonus
     spec:
-      # hostNetwork: true
-      # dnsPolicy: ClusterFirst
       containers:
       - name: gitlab-container
-        image: mdulcie/inception-of-things-42-21-bonus-gitlab:v1
+        image: mdulcie/inception-of-things-42-21-bonus-gitlab:v3
         ports:
         - containerPort: 80
           protocol: TCP
-          
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bonus-ingress
+  namespace: gitlab
+  annotations:
+    IOT/owner: "m&m's"
+  labels:
+    iot: bonus
+spec:
+  rules:
+  - host: mygitlab.ru
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gitlab
+            port:
+              number: 80

@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: gitlab
+  name: argocd
   annotations:
     IOT/owner: "m&m's"
+    

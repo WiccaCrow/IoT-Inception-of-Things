@@ -15,10 +15,10 @@
 # Gitlab image
 Исходные файлы для создания образа лежат в директории bonus/scripts/hub.docker.com/*
 Для бонусов был написан Dockerfile с установкой и запуском Gitlab в контейнере и загружен на hub.docker.com.
-В образе прописаны следующие настройки:
+В образе прописаны следующие настройки в зависимости от tag, например v3:
 ```
-URL адрес    localhost        
-Порт         8886             
+URL адрес    mygitlab.ru        
+Порт         80            
 Пользователь root             
 Пароль       mdulciemhufflep
 ```
@@ -63,8 +63,11 @@ sudo kubectl create secret tls secret-test-tls     \
    --cert=./ssl_gitlab/tls.crt
 sudo kubectl get -n gitlab secret -o yaml
 
-# зайти внутрь контейнера в поде с именем pods_name
+# зайти внутрь контейнера в пространстве имен gitlab в поде с именем pods_name
 sudo kubectl exec -n gitlab --stdin --tty pods_name -- /bin/bash
+
+# внутри контейнера argocd-server залогиниться
+argocd login localhost:8080
 
 ```
 Для работы с Gitlab посредством терминала:

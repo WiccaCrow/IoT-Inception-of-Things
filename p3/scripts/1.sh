@@ -1,17 +1,25 @@
 #!/bin/bash
 
+sudo cat /etc/hosts | grep "argocd.ru"
+if [ $? -eq 1 ]; then
+ sudo echo "127.0.0.1 argocd.ru" >> /etc/hosts
+fi
+
 #########
 # 2. Run
 echo -e "\033[1;35m Run \033[0m"
 
 echo -e "\033[32m cluster create \033[0m"
-k3d cluster create mmCluster                                \
-                                --api-port 6550             \
-                                --port '80:80@loadbalancer'
+k3d cluster create mmCluster                                  \
+                                --api-port 6550               \
+                                --port 443:443@loadbalancer   \
+                                --port 80:80@loadbalancer     \
+
+kubectl wait --for=condition=Ready=true nodes --all --timeout=-1s
 
 echo -e "\033[32m manifests \033[0m"
-kubectl create -f ../confs/namespace.yaml
-kubectl apply  -n dev    -f ../confs/dev/
+kubectl create           -f ../confs/dev/
+
 timecount=0
 while ! kubectl wait --for=condition=Ready=true pods --all -n dev
 do
@@ -20,8 +28,11 @@ do
     let timecount+=1
 done
 
-# kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl apply  -n argocd -f ../confs/argocd
+# # # kubectl apply  -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl create           -f ../confs/argocd/namespace.yaml
+kubectl apply  -n argocd -f ../confs/argocd/argocd_init.yaml
+kubectl apply  -n argocd -f ../confs/argocd/ingress.yaml
+kubectl apply  -n argocd -f ../confs/argocd/argocd.yaml
 
 #########
 echo -e "\033[1;35m Argo CD in browser: \033[0m"
@@ -38,11 +49,11 @@ timecount=0
 while kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo | grep "NotFound" 2>/dev/null
 do
     sleep 5
-    ((timecount+=5))
+    let timecount+=5
     echo -e "\033[36m...$timecount s...please wait while password is created\033[0m"
 done
 
-echo -e "\033[32m    In a browser go to http://localhost:8080 \n\
+echo -e "\033[32m\n    In a browser go to\033[34m \nhttp://argocd.ru:80 \033[32m \n\
     and log in to the argocd account with \n\
     login: \n\033[34m\
 admin \n\

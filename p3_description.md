@@ -96,6 +96,10 @@ kubectl wait ожидание определенного состояния об
 https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait \
 https://fabianlee.org/2022/01/27/kubernetes-using-kubectl-to-wait-for-condition-of-pods-deployments-services/
 
+Запрос на RepoURL по доменному имени осуществляется за пределы кластера. И если в файле hosts на самом компьютере не указать IP ноды с gitlab, то запрос будет отправлен через DNS-сервер.
+Также можно указать в repoURL IP ноды с Gitlab. \
+https://www.kryukov.biz/kubernetes/set-kubernetes-teoriya/
+
 # Адреса в браузере:
 
 Argocd: \

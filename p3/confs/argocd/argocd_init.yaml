@@ -9946,8 +9946,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-applicationset-controller
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       containers:
       - command:
         - entrypoint.sh
@@ -10027,8 +10025,6 @@ spec:
                   app.kubernetes.io/part-of: argocd
               topologyKey: kubernetes.io/hostname
             weight: 5
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       containers:
       - command:
         - /shared/argocd-dex
@@ -10119,8 +10115,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-notifications-controller
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       containers:
       - command:
         - argocd-notifications
@@ -10180,8 +10174,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-redis
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -10237,8 +10229,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-repo-server
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -10496,8 +10486,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-server
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -10796,8 +10784,6 @@ spec:
       labels:
         app.kubernetes.io/name: argocd-application-controller
     spec:
-      # dnsPolicy: ClusterFirst
-      # hostNetwork: true
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

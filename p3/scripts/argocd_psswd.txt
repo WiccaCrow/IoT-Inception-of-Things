@@ -1,2 +1,0 @@
- login: admin
- password: chZha4Gnu8MMT7qV
