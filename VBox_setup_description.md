@@ -56,7 +56,7 @@ https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyv
     VBoxManage createmedium                                  \
                         --filename $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd \
                         --variant Fixed                      \
-                        --size 20000
+                        --size 30000
 
     # Присоединить жесткий диск к контроллеру
     echo -e "\033[32m Virtual machine: attach hard disk to controller \033[0m"
@@ -146,7 +146,7 @@ rm google-chrome-stable_current_amd64.deb
     ```
         English -> Install Ubuntu -> English-English -> Minimal installation ->
         erase disk and install Ubuntu -> Continue -> Moscow time ->
-        login: mdulcie password: mdulcie comp.name: mdulcieVB Log in authomatically
+        login: mdulcie password: mdulcie comp.name: mdulcie Log in authomatically
     ```
 
 3. Установить VScode: 

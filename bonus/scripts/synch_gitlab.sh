@@ -9,6 +9,8 @@ pwd
 mv dev confs
 git add .
 git status
+git config --global user.email "Selletrer@mail.ru"
+git config --global user.name "mdulcie"
 git commit -m "synch Gitlab"
 git push
 cd -

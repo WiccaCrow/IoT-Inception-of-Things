@@ -13,7 +13,8 @@ spec:
   project: default
   source:
     repoURL: http://mygitlab.ru/root/mdulcie.git
-    targetRevision: main
+    targetRevision: HEAD
+    # targetRevision: main
     path: confs
   destination:
     server: https://kubernetes.default.svc

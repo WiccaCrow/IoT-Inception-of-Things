@@ -45,7 +45,7 @@ echo -e "\033[32m Virtual machine: create hard disk \033[0m"
 VBoxManage createmedium                                  \
                     --filename $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd \
                     --variant Fixed                      \
-                    --size 20000
+                    --size 30000
 
 # Присоединить жесткий диск к контроллеру
 echo -e "\033[32m Virtual machine: attach hard disk to controller \033[0m"
@@ -57,11 +57,13 @@ VBoxManage storageattach   vb_mdulcie                   \
                     --medium $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd
 
 # скачать установочный образ системы гостевой машины
-echo -e "\033[32m Virtual machine: download the installation \n image of the guest machine system \033[0m"
+echo -e "\033[32m Virtual machine: download the installation \n                  \
+image of the guest machine system \033[0m"
 curl -o $WORK_FOLDER/$ISO_IMAGE_NAME $ISO_IMAGE_URL
 
 # присоединить установочный образ системы гостевой машины
-echo -e "\033[32m Virtual machine: attach   the installation \n image of the guest machine system \033[0m"
+echo -e "\033[32m Virtual machine: attach   the installation \n                  \
+image of the guest machine system \033[0m"
 VBoxManage storageattach   vb_mdulcie                   \
                     --storagectl "IDE Controller"       \
                     --port 1                            \
@@ -70,6 +72,7 @@ VBoxManage storageattach   vb_mdulcie                   \
                     --medium $WORK_FOLDER/$ISO_IMAGE_NAME
 
 # запустить машину с установочного диска
-echo -e "\033[32m Virtual machine: run with the installation \n image of the guest machine system \033[0m"
+echo -e "\033[32m Virtual machine: run with the installation \n                  \
+image of the guest machine system \033[0m"
 VBoxManage modifyvm        vb_mdulcie --boot1 dvd
 VBoxManage startvm         vb_mdulcie --type gui

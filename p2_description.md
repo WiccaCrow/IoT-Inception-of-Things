@@ -132,3 +132,5 @@ https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 hello kubernetes. Ссылка на приложение и инструкция по использованию
 https://hub.docker.com/r/paulbouwer/hello-kubernetes/
 https://github.com/paulbouwer/hello-kubernetes/tree/0ec53bfee741ae3bffb5936f1c44138d7d4a3006
+
+# Адреса в браузере:
