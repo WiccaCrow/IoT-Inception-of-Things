@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 gsettings set org.gnome.desktop.session idle-delay 0
 sudo snap install --classic code

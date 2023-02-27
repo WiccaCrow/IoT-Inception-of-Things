@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ISO_IMAGE_NAME="OS_guest.iso"
 WORK_FOLDER="/Users/mdulcie/goinfre"

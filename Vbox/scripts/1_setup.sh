@@ -1,11 +1,34 @@
-#!/bin/sh
+#!/bin/bash
 
 ISO_IMAGE_URL="https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso"
 ISO_IMAGE_NAME="OS_guest.iso"
-WORK_FOLDER="/Users/mdulcie/goinfre"
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    WORK_FOLDER=$HOME
+    mkdir -p $WORK_FOLDER/vb_mdulcie
+    MEMORY=1024
+    CPUS=2
+    HD_SIZE=30000
+    # to see information about VGA: lspci
+    # lspci -v -s 00:02.0
+    VGA=128
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    WORK_FOLDER="/Users/mdulcie/goinfre"
+    MEMORY=8192
+    CPUS=6
+    HD_SIZE=30000
+    VGA=64
+else
+    echo Oopps
+    exit
+fi
 
 # доступные ОС для установки на машине хосте.
-VBoxManage list ostypes
+# VBoxManage list ostypes
+if ! VBoxManage list ostypes | grep Ubuntu_64; then
+    echo "It is impossible to install Ubuntu_64 on your VBox"
+    exit
+fi
 
 #  создать виртуальную машину и зарегистрировать в списке виртуальных машин
 echo -e "\033[32m Virtual machine: Create and register \033[0m"
@@ -18,9 +41,9 @@ VBoxManage createvm                                     \
 # настроить виртуальную машину
 echo -e "\033[32m Virtual machine: setup \033[0m"
 VBoxManage modifyvm        vb_mdulcie                   \
-                    --memory 8192                       \
-                    --vram 64                           \
-                    --cpus 6                            \
+                    --memory $MEMORY                    \
+                    --vram $VGA                         \
+                    --cpus $CPUS                        \
                     --pae on                            \
                     --longmode on                       \
                     --apic on                           \
@@ -45,7 +68,7 @@ echo -e "\033[32m Virtual machine: create hard disk \033[0m"
 VBoxManage createmedium                                  \
                     --filename $WORK_FOLDER/vb_mdulcie/vb_mdulcie.vhd \
                     --variant Fixed                      \
-                    --size 30000
+                    --size $HD_SIZE
 
 # Присоединить жесткий диск к контроллеру
 echo -e "\033[32m Virtual machine: attach hard disk to controller \033[0m"
