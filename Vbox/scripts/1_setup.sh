@@ -3,8 +3,9 @@
 ISO_IMAGE_URL="https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso"
 ISO_IMAGE_NAME="OS_guest.iso"
 
+WORK_FOLDER=$HOME
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    WORK_FOLDER=$HOME
     mkdir -p $WORK_FOLDER/vb_mdulcie
     MEMORY=1024
     CPUS=2
@@ -13,7 +14,12 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # lspci -v -s 00:02.0
     VGA=128
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    WORK_FOLDER="/Users/mdulcie/goinfre"
+    if ls $HOME | grep goinfre ; then
+        echo present
+    else
+        mkdir $WORK_FOLDER/goinfre
+    fi
+    WORK_FOLDER+="/goinfre"
     MEMORY=8192
     CPUS=6
     HD_SIZE=30000

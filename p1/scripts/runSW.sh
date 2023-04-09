@@ -6,7 +6,7 @@ sudo sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
 sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
 
 #
-swapoff -a
+# swapoff -a
 echo -e "\033[1;35m install k3s \033[0m"
 export    K3S_KUBECONFIG_MODE="644"     \
           K3S_URL=https://$1:6443       \

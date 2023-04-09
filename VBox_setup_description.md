@@ -8,14 +8,15 @@ https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-modifyv
         * образ гостевой ОС, 
         * файлы гостевой виртуальной машины, 
         * расположен жесткий диск.
-    ```
-    #!/bin/bash
+```sh
+#!/bin/bash
 
 ISO_IMAGE_URL="https://releases.ubuntu.com/focal/ubuntu-20.04.5-desktop-amd64.iso"
 ISO_IMAGE_NAME="OS_guest.iso"
 
+WORK_FOLDER=$HOME
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    WORK_FOLDER=$HOME
     mkdir -p $WORK_FOLDER/vb_mdulcie
     MEMORY=1024
     CPUS=2
@@ -24,7 +25,12 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # lspci -v -s 00:02.0
     VGA=128
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    WORK_FOLDER="/Users/mdulcie/goinfre"
+    if ls $HOME | grep goinfre ; then
+        echo present
+    else
+        mkdir $WORK_FOLDER/goinfre
+    fi
+    WORK_FOLDER+="/goinfre"
     MEMORY=8192
     CPUS=6
     HD_SIZE=30000
@@ -110,26 +116,26 @@ echo -e "\033[32m Virtual machine: run with the installation \n                 
 image of the guest machine system \033[0m"
 VBoxManage modifyvm        vb_mdulcie --boot1 dvd
 VBoxManage startvm         vb_mdulcie --type gui
-    ```
+```
 
 2. После того, как ОС будет установлена, выключить, а не перезагрузить Виртуальную машину и
-    ```
-   #!/bin/sh
+```sh
+#!/bin/sh
 
-    # ISO_IMAGE_NAME="OS_guest.iso"
-    # WORK_FOLDER="/Users/mdulcie/goinfre"
-    # rm -rf $WORK_FOLDER/$ISO_IMAGE_NAME
+# ISO_IMAGE_NAME="OS_guest.iso"
+# WORK_FOLDER="/Users/mdulcie/goinfre"
+# rm -rf $WORK_FOLDER/$ISO_IMAGE_NAME
 
-    # запустить машину без установочного диска
+# запустить машину без установочного диска
 
-    echo -e "\033[32m Virtual machine: run without the installation \n image of the guest machine system \033[0m"
-    
-    VBoxManage modifyvm        vb_mdulcie --boot1 none
-    VBoxManage startvm         vb_mdulcie --type gui
-    ```
+echo -e "\033[32m Virtual machine: run without the installation \n image of the guest machine system \033[0m"
+
+VBoxManage modifyvm        vb_mdulcie --boot1 none
+VBoxManage startvm         vb_mdulcie --type gui
+```
 
 Внутри Виртуальной машины выполнить команды, либо запустить скрипт с содержимым:
-```
+```sh
 #!/bin/sh
 
 gsettings set org.gnome.desktop.session idle-delay 0
@@ -192,7 +198,8 @@ rm google-chrome-stable_current_amd64.deb
         ssh-keygen
 
     выбрать папку: /home/mdulcie/.ssh
-    из файла /home/mdulcie/.ssh/id_rsa.pub     добавить ключ на гите
+    из файла /home/mdulcie/.ssh/id_rsa.pub
+    добавить ключ на гите
 
 https://help.reg.ru/support/servery-vps/oblachnyye-servery/rabota-s-serverom/kak-ustanovit-i-nastroit-ssh
 

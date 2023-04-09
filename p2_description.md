@@ -134,3 +134,12 @@ https://hub.docker.com/r/paulbouwer/hello-kubernetes/
 https://github.com/paulbouwer/hello-kubernetes/tree/0ec53bfee741ae3bffb5936f1c44138d7d4a3006
 
 # Адреса в браузере:
+
+app1: \
+http://app1.com:80    
+
+app2: \
+http://app2.com:80
+
+app3: \
+http://192.168.56.110:80 
